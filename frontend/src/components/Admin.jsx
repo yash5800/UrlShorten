@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { AuthContext } from '../context/lib';
 import { useNavigate } from 'react-router-dom';
+import Nav from './Nav';
 
 const Admin = () => {
   //'/api/urls'
@@ -8,11 +9,8 @@ const Admin = () => {
   const [urls, setUrls] = React.useState([]);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (!login) {
-      return navigate('/login');
-    }
-    // Fetch URLs from the API
+  // Function to fetch URLs
+  const fetchUrls = () => {
     fetch(`${end}/api/urls`, {
       method: 'GET',
       headers: {
@@ -22,14 +20,19 @@ const Admin = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log('Fetched URLs:', data);
         setUrls(data);
       })
       .catch((error) => {
         console.error('Error fetching URLs:', error);
       });
+  };
 
-    }, [login,end,navigate]);
+  useEffect(() => {
+    if (!login) {
+      return navigate('/login');
+    }
+    fetchUrls();
+  }, [login,end,navigate]);
 
   const handleDelete = (id) => {
     fetch(`${end}/delete/${id}`, {
@@ -41,7 +44,7 @@ const Admin = () => {
     })
       .then((response) => {
         if (response.ok) {
-          setUrls(urls.filter((url) => url.shortcode !== id));
+          fetchUrls();
         } else {
           console.error('Error deleting URL:', response.statusText);
         }
@@ -51,9 +54,19 @@ const Admin = () => {
       });
   }
 
+  // Handler for short URL click
+  const handleShortUrlClick = () => {
+    // Wait 500ms then refresh URLs to update view count
+    setTimeout(() => {
+      fetchUrls();
+    }, 500);
+  };
+
 
   return (
-    <div className='bg-slate-500 min-h-screen p-4'>
+    <>
+      <Nav />
+      <div className='bg-slate-500 min-h-screen p-4'>
 
       <h1 className='text-2xl text-gray-100 font-bold mb-4'>These are your shortened URLs:</h1>
       <div className='overflow-x-auto py-5'>
@@ -73,7 +86,12 @@ const Admin = () => {
                   <a href={url.original_url} target="_blank" rel="noopener noreferrer">{url.original_url}</a>
                 </td>
                 <td className='p-2'>
-                  <a href={`${end}/${url.shortcode}`} target="_blank" rel="noopener noreferrer">{`${end}/${url.shortcode}`}</a>
+                  <a 
+                    href={`${end}/${url.shortcode}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={handleShortUrlClick}
+                  >{`${end}/${url.shortcode}`}</a>
                 </td>
                 <td className='p-2'>{url.views}</td>
                 <td className='p-2'>
@@ -87,7 +105,8 @@ const Admin = () => {
         </table>
       </div>
 
-    </div>
+      </div>
+    </>
   )
 }
 
