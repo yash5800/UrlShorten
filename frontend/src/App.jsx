@@ -13,7 +13,7 @@ const App = () => {
 
   return (
     <AuthContext.Provider value={{login, setLogin, end}}>
-      <BrowserRouter>
+      <BrowserRouter basename="/UrlShorten">
         <Routes>
           <Route path="*" element={<Home />} />
           <Route path="/login" element={<Login />} />
