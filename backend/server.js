@@ -49,6 +49,11 @@ app.get('/api/urls', async (req, res) => {
     }
 });
 
+// testing
+app.get('/api/', async (req, res) => {
+    res.json({ message: 'API is working' });
+});
+
 // shorten a URL
 app.post('/api/shorten', async (req, res) => {
     const { url } = req.body;
