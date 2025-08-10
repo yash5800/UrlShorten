@@ -49,7 +49,7 @@ const Hero = () => {
       <div className='flex flex-col py-5 justify-center items-center gap-6'>
        <p className='text-xl font-bold'>Paste Your Original URL Here:</p>
         <form action="" className='flex gap-3 max-md:flex-col' onSubmit={handleShorten}>
-          <input type="text" name="url" placeholder="Enter URL" className="border py-2 px-9 min-xl:px-18 rounded-md" />
+          <input type="text" name="url" placeholder="Enter URL" className="border py-2 min-w-[19rem] min-xl:w-[22rem] px-2 rounded-md" />
           <button className="bg-blue-500 text-white px-4 py-2 rounded">Shorten</button>
         </form>
         {shortcode && <div className='flex flex-col px-5 bg-slate-800 rounded-md p-3 min-xl:px-18'>

@@ -68,7 +68,7 @@ const Admin = () => {
           </thead>
           <tbody className='text-blue-400'>
             {urls.map((url) => (
-              <tr key={url.id} className='border-b border-gray-700'>
+              <tr key={url.shortcode} className='border-b border-gray-700'>
                 <td className='p-2'>{url.original_url}</td>
                 <td className='p-2'>{`${end}/${url.shortcode}`}</td>
                 <td className='p-2'>{url.views}</td>
