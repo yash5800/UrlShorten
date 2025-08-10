@@ -69,8 +69,12 @@ const Admin = () => {
           <tbody className='text-blue-400'>
             {urls.map((url) => (
               <tr key={url.shortcode} className='border-b border-gray-700'>
-                <td className='p-2'>{url.original_url}</td>
-                <td className='p-2'>{`${end}/${url.shortcode}`}</td>
+                <td className='p-2'>
+                  <a href={url.original_url} target="_blank" rel="noopener noreferrer">{url.original_url}</a>
+                </td>
+                <td className='p-2'>
+                  <a href={`${end}/${url.shortcode}`} target="_blank" rel="noopener noreferrer">{`${end}/${url.shortcode}`}</a>
+                </td>
                 <td className='p-2'>{url.views}</td>
                 <td className='p-2'>
                    <button 
